@@ -1,0 +1,18 @@
+services:
+  db:
+    image: mysql:8.0.35
+    restart: always
+    environment:
+      - TZ=Asia/Seoul
+      - MYSQL_DATABASE=mcp_test
+      - MYSQL_ROOT_PASSWORD=mcpTest1234!!!
+    volumes:
+      - mysql_db:/var/lib/mysql
+    ports:
+      - 3306:3306
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
+volumes:
+  mysql_db:
