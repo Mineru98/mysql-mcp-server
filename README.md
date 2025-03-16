@@ -20,8 +20,8 @@ python mysql_mcp_server/main.py run
   - `excute` 함수들은 실제 로직을 동작하게 만들어줍니다.(Service Layer)
   - `@tool` 데코레이터는 MCP에 도구를 명세 등록을 도와줍니다.(Controller Layer)
 - 설명
-  - `mysql_mcp_server/excutors` 아래에 파일당 도구 하나 라고 봐야 합니다.
-  - 도구를 하나 추가했다면, `mysql_mcp_server/excutors/__init__.py` 파일에서 `import` 하고, __all__ 배열에도 추가해줍니다.
+  - `mysql_mcp_server/executors` 아래에 파일당 도구 하나 라고 봐야 합니다.
+  - 도구를 하나 추가했다면, `mysql_mcp_server/executors/__init__.py` 파일에서 `import` 하고, __all__ 배열에도 추가해줍니다.
   그럼 `TOOLS_DEFINITION` 변수에 모듈들이 자동 등록이 됩니다.
   
 
@@ -35,8 +35,10 @@ flowchart LR;
     
     subgraph Executors
         C1[execute_create_table] -->|테이블 생성| D
-        C2[execute_select_query] -->|쿼리 실행| D
-        C3[execute_show_table] -->|테이블 조회| D
+        C2[execute_desc_table] -->|테이블 스키마 확인| D
+        C3[execute_explain] -->|쿼리 실행 계획| D
+        C3[execute_select_query] -->|SELECT 쿼리 실행| D
+        C3[execute_show_tables] -->|테이블 목록 조회| D
     end
 
     D[DatabaseManager] -->|MySQL 연결| E[MySQL 8.0]
@@ -82,10 +84,12 @@ MCPMySQLBoilerPlate는 MCP(Model Control Protocol) 기반의 MySQL 데이터베�
 ```
 MCPMySQLBoilerPlate/
 ├── mysql_mcp_server/           # 메인 애플리케이션 디렉토리
-│   ├── excutors/               # 데이터베이스 작업 실행기
+│   ├── executors/              # 데이터베이스 작업 실행기
 │   │   ├── create_table.py     # 테이블 생성 도구
-│   │   ├── select_query.py     # 쿼리 실행 도구
-│   │   └── show_table.py       # 테이블 조회 도구
+│   │   ├── desc_table.py       # 테이블 스키마 확인 도구
+│   │   ├── explain.py          # 쿼리 실행 계획 도구
+│   │   ├── select_query.py     # SELECT 쿼리 실행 도구
+│   │   └── show_tables.py      # 테이블 목록 조회 도구
 │   ├── handlers/               # MCP 요청 처리기
 │   │   ├── call_tool.py        # 도구 호출 처리
 │   │   └── list_tools.py       # 도구 목록 제공
@@ -115,8 +119,10 @@ MCPMySQLBoilerPlate/
 - **DatabaseManager**: 싱글톤 패턴을 사용한 데이터베이스 연결 관리자
 - **Executors**: 데이터베이스 작업을 수행하는 도구 모음
   - execute_create_table: 테이블 생성
-  - execute_select_query: SQL 쿼리 실행
-  - execute_show_table: 테이블 정보 조회
+  - execute_desc_table: 테이블 스키마 확인
+  - execute_explain: 쿼리 실행 계획
+  - execute_select_query: SELECT 쿼리 실행
+  - execute_show_tables: 테이블 목록 조회
 
 ### 4.3 통신 흐름
 
@@ -128,7 +134,7 @@ MCPMySQLBoilerPlate/
 
 ## 5. 확장성 및 유지보수
 
-- **도구 추가**: excutors 디렉토리에 새로운 도구 구현 후 __init__.py에 등록
+- **도구 추가**: executors 디렉토리에 새로운 도구 구현 후 __init__.py에 등록
 - **환경 설정**: .env 파일을 통한 환경 변수 관리
 - **로깅**: logger_helper를 통한 일관된 로깅 시스템
 
