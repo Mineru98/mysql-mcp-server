@@ -25,6 +25,26 @@ python mysql_mcp_server/main.py run
   그럼 `TOOLS_DEFINITION` 변수에 모듈들이 자동 등록이 됩니다.
   
 
+```mermaid
+flowchart LR;
+    A[AI 모델] -->|도구 목록 요청| B[MCP 서버]
+    B -->|사용 가능한 도구 목록 반환| A
+
+    A -->|특정 도구 호출 요청| B
+    B -->|해당 실행기 호출| C[Executors]
+
+    C -->|쿼리 실행| D[DatabaseManager]
+    D -->|MySQL 연결| E[MySQL 8.0]
+
+    E -->|결과 반환| D
+    D -->|결과 전달| C
+    C -->|결과 반환| B
+    B -->|작업 결과 반환| A
+
+```
+
+
+
 ## 1. 개요
 
 MCPMySQLBoilerPlate는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
