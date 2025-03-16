@@ -13,10 +13,10 @@ from mcp.server import Server
 from mcp.server.fastmcp import FastMCP
 from mcp.server.stdio import stdio_server
 
+from mysql_mcp_server.excutors import TOOLS_DEFINITION
 from mysql_mcp_server.handlers import handle_call_tool, handle_list_tools
 from mysql_mcp_server.helper.db_conn_helper import DatabaseManager
 from mysql_mcp_server.helper.logger_helper import logger
-from mysql_mcp_server.tools.tool_definitions import execute_create_table, execute_query, execute_show_table
 
 load_dotenv()
 
@@ -66,12 +66,8 @@ class MySQLMCPServer:
         self.conn = db_manager.get_connection()
 
     def __setup_tools(self):
-        ###
-        # (1) 이곳에 툴을 등록해야 합니다.
-        ###
-        self.mcp.tool()(execute_query)
-        self.mcp.tool()(execute_create_table)
-        self.mcp.tool()(execute_show_table)
+        for tool_schema in TOOLS_DEFINITION:
+            self.mcp.tool()(tool_schema)
 
     async def __stdio_main(self):
         async with stdio_server() as (read_stream, write_stream):
