@@ -1,4 +1,14 @@
 services:
+  mysql-mcp-server:
+    build: .
+    ports:
+      - 8081:8081
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=mcpTest1234!!!
+      - MYSQL_DATABASE=mcp_test
   db:
     image: mysql:8.0.35
     restart: always
@@ -13,6 +23,5 @@ services:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-
 volumes:
   mysql_db:
