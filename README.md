@@ -1,5 +1,7 @@
 # MCPMySQLBoilerPlate
 
+> --stdio 실행 방식은 현재 개발 단계에 있습니다.
+
 ## 0. 실습
 
 ### 설치
