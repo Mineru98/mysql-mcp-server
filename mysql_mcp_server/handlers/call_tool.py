@@ -4,13 +4,7 @@ from typing import Any, Dict, List
 
 from mcp.types import TextContent
 
-from mysql_mcp_server.executors import (
-    execute_create_table,
-    execute_desc_table,
-    execute_explain,
-    execute_select_query,
-    execute_show_tables,
-)
+from mysql_mcp_server.executors import *
 
 
 async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
