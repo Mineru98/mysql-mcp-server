@@ -5,6 +5,8 @@ services:
       - 8081:8081
     env_file:
       - .env.example
+    environment:
+      - MYSQL_HOST=db
   db:
     image: mysql:8.0.35
     restart: always
