@@ -16,13 +16,13 @@ python mysql_mcp_server/main.py run
 
 ### Tool 추가 Tips
 
-- 설명
-  - `mysql_mcp_server/excutors` 아래에 파일당 도구 하나 라고 봐야 합니다.
-  - `mysql_mcp_server/excutors/__init__.py` 도구를 하나 추가했다면, `import` 하고, __all__ 배열에도 추가해줍니다.
-  그럼 `TOOLS_DEFINITION` 변수에 모듈들이 자동 등록이 됩니다.
 - Tool 추가
   - `excute` 함수들은 실제 로직을 동작하게 만들어줍니다.(Service Layer)
   - `@tool` 데코레이터는 MCP에 도구를 명세 등록을 도와줍니다.(Controller Layer)
+- 설명
+  - `mysql_mcp_server/excutors` 아래에 파일당 도구 하나 라고 봐야 합니다.
+  - 도구를 하나 추가했다면, `mysql_mcp_server/excutors/__init__.py` 파일에서 `import` 하고, __all__ 배열에도 추가해줍니다.
+  그럼 `TOOLS_DEFINITION` 변수에 모듈들이 자동 등록이 됩니다.
   
 
 ## 1. 개요
