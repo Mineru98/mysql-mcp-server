@@ -3,12 +3,8 @@ services:
     build: .
     ports:
       - 8081:8081
-    environment:
-      - MYSQL_HOST=db
-      - MYSQL_PORT=3306
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=mcpTest1234!!!
-      - MYSQL_DATABASE=mcp_test
+    env_file:
+      - .env.example
   db:
     image: mysql:8.0.35
     restart: always
