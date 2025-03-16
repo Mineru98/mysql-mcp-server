@@ -5,7 +5,6 @@ from typing import Any, Dict, List
 from mcp.types import TextContent
 
 from mysql_mcp_server.excutors import execute_create_table, execute_select_query, execute_show_table
-from mysql_mcp_server.models import MysqlCreateTableInput, MysqlQueryInput, MysqlShowTableInput
 
 
 async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
@@ -17,19 +16,19 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
     """
     try:
         if name == "execute_select_query":
-            input_arguments = MysqlQueryInput(query=arguments.get("query", "").strip())
+            query = arguments.get("query", "").strip()
 
-            response_data = await asyncio.to_thread(execute_select_query, query=input_arguments.query)
+            response_data = await asyncio.to_thread(execute_select_query, query=query)
             return [response_data]
         elif name == "execute_create_table":
-            input_arguments = MysqlCreateTableInput(query=arguments.get("query", "").strip())
+            query = arguments.get("query", "").strip()
 
-            response_data = await asyncio.to_thread(execute_create_table, query=input_arguments.query)
+            response_data = await asyncio.to_thread(execute_create_table, query=query)
             return [response_data]
         elif name == "execute_show_table":
-            input_arguments = MysqlShowTableInput(query=arguments.get("query", "").strip())
+            query = arguments.get("query", "").strip()
 
-            response_data = await asyncio.to_thread(execute_show_table, query=input_arguments.query)
+            response_data = await asyncio.to_thread(execute_show_table, query=query)
             return [response_data]
         else:
             raise ValueError(f"Tool '{name}' not found.")

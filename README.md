@@ -70,7 +70,6 @@ MCPMySQLBoilerPlate는 MCP(Model Control Protocol) 기반의 MySQL 데이터베�
   - PyMySQL: MySQL 데이터베이스 연결 및 쿼리 실행
   - pandas: 데이터 처리 및 분석
   - python-dotenv: 환경 변수 관리
-  - pydantic: 데이터 검증 및 설정 관리
   - fire: 명령줄 인터페이스 구현
 
 ### 2.3 배포 환경
