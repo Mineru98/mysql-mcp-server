@@ -157,8 +157,10 @@ python mysql_mcp_server/main.py run
 ### 6.2 Docker 배포
 
 ```bash
-# Docker Compose로 실행
-docker-compose up -d
+# Docker Compose로 DB 실행
+docker-compose up -d db
+# Docker Compose로 mysql mcp server 이미지 빌드 후 실행(재빌드 포함)
+docker-compose up -d --build mysql-mcp-server 
 ```
 
 ## 7. 보안 고려사항
