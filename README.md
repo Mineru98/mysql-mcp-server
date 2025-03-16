@@ -1,8 +1,6 @@
 # MCPMySQLBoilerPlate
 
-## 1. 개요
-
-MCPMySQLBoilerPlate는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
+## 0. 실습
 
 ### 설치
 
@@ -15,6 +13,21 @@ pip install -r requirements.txt
 ```bash
 python mysql_mcp_server/main.py run
 ```
+
+### Tool 추가 Tips
+
+- 설명
+  - `mysql_mcp_server/excutors` 아래에 파일당 도구 하나 라고 봐야 합니다.
+  - `mysql_mcp_server/excutors/__init__.py` 도구를 하나 추가했다면, `import` 하고, __all__ 배열에도 추가해줍니다.
+  그럼 `TOOLS_DEFINITION` 변수에 모듈들이 자동 등록이 됩니다.
+- Tool 추가
+  - `excute` 함수들은 실제 로직을 동작하게 만들어줍니다.(Service Layer)
+  - `@tool` 데코레이터는 MCP에 도구를 명세 등록을 도와줍니다.(Controller Layer)
+  
+
+## 1. 개요
+
+MCPMySQLBoilerPlate는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
 
 ## 2. 시스템 구성
 
