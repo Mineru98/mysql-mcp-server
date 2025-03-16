@@ -10,20 +10,19 @@ from mysql_mcp_server.helper.tool_decorator import tool
 
 
 @tool()
-def execute_show_table(query: str) -> List[TextContent]:
+def execute_show_tables(query: str) -> List[TextContent]:
     """
-    Run a MySQL show table query
+    데이터베이스에서 SHOW TABLE 쿼리를 실행하여 테이블 정보를 조회하는 함수입니다.
+    이 함수는 MySQL 데이터베이스에 연결하여 사용자가 제공한 쿼리를 실행하고, 그 결과를 JSON 형식으로 반환합니다.
+    주로 데이터베이스 내의 테이블 목록이나 테이블 상태를 확인할 때 사용됩니다.
 
     Args:
-        query: MySQL 테이블 조회 문자열
-
-    Returns:
-        MySQL 테이블 조회 결과
+        query: 데이터베이스에 실행할 SHOW TABLE 관련 SQL 쿼리 문자열입니다.
     """
     conn = DatabaseManager.get_instance().get_connection()
     try:
         with conn.cursor() as cursor:
-            logger.info(f"[execute_show_table] query: {query}")
+            logger.info(f"[execute_show_tables] query: {query}")
             cursor.execute(query)
         result = cursor.fetchall()
         response_data = {"success": True, "data": result}

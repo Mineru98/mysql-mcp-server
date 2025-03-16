@@ -12,27 +12,23 @@ from mysql_mcp_server.helper.tool_decorator import tool
 @tool()
 def execute_select_query(query: str) -> List[TextContent]:
     """
-    Run a read-only MySQL query
+    MySQL 데이터베이스에서 주어진 쿼리를 실행하여 데이터를 조회하거나 수정하는 함수입니다.
+    주로 SELECT 쿼리를 실행하여 데이터를 가져오는 데 사용되며, 쿼리 결과 또는 실행 상태를 JSON 형식으로 반환합니다.
 
     Args:
-        query: MySQL 쿼리 문자열
-
-    Returns:
-        MySQL 쿼리 결과
+        query: 실행할 MySQL 쿼리 문자열. SELECT로 시작하는 조회 쿼리 또는 기타 DML 쿼리를 포함할 수 있음.
     """
     conn = DatabaseManager.get_instance().get_connection()
     try:
         with conn.cursor() as cursor:
             logger.info(f"[execute_select_query] query: {query}")
             cursor.execute(query)
-            if (
-                query.strip().upper().startswith("SELECT")
-                or query.strip().upper().startswith("DESCRIBE")
-                or query.strip().upper().startswith("DESC")
-                or query.strip().upper().startswith("SHOW")
-                or query.strip().upper().startswith("EXPLAIN")
-            ):
+            if query.strip().upper().startswith("SELECT"):
                 result = cursor.fetchall()
+                for row in result:
+                    for key, value in row.items():
+                        if hasattr(value, "strftime"):
+                            row[key] = value.strftime("%Y-%m-%d %H:%M:%S")
                 response_data = {"success": True, "data": result}
             else:
                 conn.commit()

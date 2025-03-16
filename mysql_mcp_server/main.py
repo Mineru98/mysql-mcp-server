@@ -13,7 +13,7 @@ from mcp.server import Server
 from mcp.server.fastmcp import FastMCP
 from mcp.server.stdio import stdio_server
 
-from mysql_mcp_server.excutors import TOOLS_DEFINITION
+from mysql_mcp_server.executors import TOOLS_DEFINITION
 from mysql_mcp_server.handlers import handle_call_tool, handle_list_tools
 from mysql_mcp_server.helper.db_conn_helper import DatabaseManager
 from mysql_mcp_server.helper.logger_helper import logger

@@ -4,7 +4,13 @@ from typing import Any, Dict, List
 
 from mcp.types import TextContent
 
-from mysql_mcp_server.excutors import execute_create_table, execute_select_query, execute_show_table
+from mysql_mcp_server.executors import (
+    execute_create_table,
+    execute_desc_table,
+    execute_explain,
+    execute_select_query,
+    execute_show_tables,
+)
 
 
 async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
@@ -15,20 +21,30 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
     반환값은 List[TextContent] 형태여야 하며, MCP에 문자열 형태로 전달된다.
     """
     try:
-        if name == "execute_select_query":
-            query = arguments.get("query", "").strip()
-
-            response_data = await asyncio.to_thread(execute_select_query, query=query)
-            return [response_data]
-        elif name == "execute_create_table":
+        if name == "execute_create_table":
             query = arguments.get("query", "").strip()
 
             response_data = await asyncio.to_thread(execute_create_table, query=query)
             return [response_data]
-        elif name == "execute_show_table":
+        elif name == "execute_desc_table":
             query = arguments.get("query", "").strip()
 
-            response_data = await asyncio.to_thread(execute_show_table, query=query)
+            response_data = await asyncio.to_thread(execute_desc_table, query=query)
+            return [response_data]
+        elif name == "execute_explain":
+            query = arguments.get("query", "").strip()
+
+            response_data = await asyncio.to_thread(execute_explain, query=query)
+            return [response_data]
+        elif name == "execute_select_query":
+            query = arguments.get("query", "").strip()
+
+            response_data = await asyncio.to_thread(execute_select_query, query=query)
+            return [response_data]
+        elif name == "execute_show_tables":
+            query = arguments.get("query", "").strip()
+
+            response_data = await asyncio.to_thread(execute_show_tables, query=query)
             return [response_data]
         else:
             raise ValueError(f"Tool '{name}' not found.")

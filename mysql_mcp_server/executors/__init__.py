@@ -3,10 +3,18 @@ import inspect
 import sys
 
 from .create_table import execute_create_table
+from .desc_table import execute_desc_table
+from .explain import execute_explain
 from .select_query import execute_select_query
-from .show_table import execute_show_table
+from .show_tables import execute_show_tables
 
-__all__ = ["execute_create_table", "execute_select_query", "execute_show_table"]
+__all__ = [
+    "execute_create_table",
+    "execute_select_query",
+    "execute_show_tables",
+    "execute_desc_table",
+    "execute_explain",
+]
 
 TOOLS_DEFINITION = [
     obj
