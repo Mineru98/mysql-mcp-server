@@ -7,7 +7,7 @@ MCPMySQLBoilerPlate는 MCP(Model Control Protocol) 기반의 MySQL 데이터베�
 ### 설치
 
 ```
-pip install mcp
+pip install -r requirements.txt
 ```
 
 ### 실행
