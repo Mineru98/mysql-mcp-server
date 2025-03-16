@@ -37,8 +37,8 @@ flowchart LR;
         C1[execute_create_table] -->|테이블 생성| D
         C2[execute_desc_table] -->|테이블 스키마 확인| D
         C3[execute_explain] -->|쿼리 실행 계획| D
-        C3[execute_select_query] -->|SELECT 쿼리 실행| D
-        C3[execute_show_tables] -->|테이블 목록 조회| D
+        C4[execute_select_query] -->|SELECT 쿼리 실행| D
+        C5[execute_show_tables] -->|테이블 목록 조회| D
     end
 
     D[DatabaseManager] -->|MySQL 연결| E[MySQL 8.0]
