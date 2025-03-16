@@ -32,15 +32,19 @@ flowchart LR;
 
     A -->|특정 도구 호출 요청| B
     B -->|해당 실행기 호출| C[Executors]
+    
+    subgraph Executors
+        C1[execute_create_table] -->|테이블 생성| D
+        C2[execute_select_query] -->|쿼리 실행| D
+        C3[execute_show_table] -->|테이블 조회| D
+    end
 
-    C -->|쿼리 실행| D[DatabaseManager]
-    D -->|MySQL 연결| E[MySQL 8.0]
+    D[DatabaseManager] -->|MySQL 연결| E[MySQL 8.0]
 
     E -->|결과 반환| D
     D -->|결과 전달| C
     C -->|결과 반환| B
     B -->|작업 결과 반환| A
-
 ```
 
 
