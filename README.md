@@ -77,7 +77,7 @@ flowchart LR;
 
 ## 1. 개요
 
-MCPMySQLBoilerPlate는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
+MCP MySQL Server는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
 
 ## 2. 시스템 구성
 
