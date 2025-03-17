@@ -1,5 +1,9 @@
 # mysql-mcp-server
 
+<a href="https://glama.ai/mcp/servers/6y836dz8o5">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/6y836dz8o5/badge" />
+</a>
+
 > --stdio execution mode is currently in the development phase.
 
 [한국어 README.md](https://github.com/Mineru98/mysql-mcp-server/blob/main/README.ko.md)
@@ -80,7 +84,7 @@ flowchart LR;
 
 ## 1. Overview
 
-MCP MySQL Server is a server application for MySQL database operations based on MCP (Model Control Protocol). This server provides tools that allow AI models to interact with the MySQL database.
+MCP MySQL Server is a server application for MySQL database operations based on MCP (Model Context Protocol). This server provides tools that allow AI models to interact with the MySQL database.
 
 ## 2. System Configuration
 
@@ -95,7 +99,7 @@ MCP MySQL Server is a server application for MySQL database operations based on 
 - **Language**: Python
 - **Database**: MySQL 8.0
 - **Key Libraries**:
-  - mcp: Implements Model Control Protocol for AI communication
+  - mcp: Implements Model Context Protocol for AI communication
   - PyMySQL: Connects to MySQL and executes queries
   - pandas: Processes and analyzes data
   - python-dotenv: Manages environment variables

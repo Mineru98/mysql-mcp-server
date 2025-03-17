@@ -3,6 +3,10 @@
 
 > --stdio 실행 방식은 현재 개발 단계에 있습니다.
 
+<a href="https://glama.ai/mcp/servers/6y836dz8o5">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/6y836dz8o5/badge" />
+</a>
+
 ## 0. 실행
 
 ### 도커로 구동
@@ -82,7 +86,7 @@ flowchart LR;
 
 ## 1. 개요
 
-MCP MySQL Server는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
+MCP MySQL Server는 MCP(Model Context Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
 
 ## 2. 시스템 구성
 
@@ -97,7 +101,7 @@ MCP MySQL Server는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이�
 - **언어**: Python
 - **데이터베이스**: MySQL 8.0
 - **주요 라이브러리**:
-  - mcp: AI 모델과의 통신을 위한 Model Control Protocol 구현
+  - mcp: AI 모델과의 통신을 위한 Model Context Protocol 구현
   - PyMySQL: MySQL 데이터베이스 연결 및 쿼리 실행
   - pandas: 데이터 처리 및 분석
   - python-dotenv: 환경 변수 관리
