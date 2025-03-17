@@ -125,7 +125,6 @@ MCPMySQLBoilerPlate/
 │   │   ├── db_conn_helper.py   # 데이터베이스 연결 관리
 │   │   ├── logger_helper.py    # 로깅 유틸리티
 │   │   └── tool_decorator.py   # 도구 데코레이터
-│   ├── models/                 # 데이터 모델
 │   └── main.py                 # 애플리케이션 진입점
 ├── docker-compose.yml          # Docker Compose 설정
 ├── Dockerfile                  # Docker 이미지 빌드 설정
