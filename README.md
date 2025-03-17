@@ -37,6 +37,7 @@ python mysql_mcp_server/main.py run
 ### Cursor 설정
 
 > cursor 0.46 버전 이상 부터 MCP 기능을 제공합니다.
+> 
 > 또한, MCP 기능은 Cursor Pro 계정 사용자만 사용할 수 있습니다.
 
 ![Cursor Setting](assets/cursor_setting.png)
