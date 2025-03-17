@@ -1,12 +1,18 @@
-# MCPMySQLBoilerPlate
+# mysql-mcp-server
 
-> --stdio 실행 방식은 현재 개발 단계에 있습니다.
+<a href="https://glama.ai/mcp/servers/6y836dz8o5">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/6y836dz8o5/badge" />
+</a>
 
-## 0. 실행
+> --stdio execution mode is currently in the development phase.
 
-### 도커로 구동
+[한국어 README.md](https://github.com/Mineru98/mysql-mcp-server/blob/main/README.ko.md)
 
-> 원하시는 디비 커넥션 정보로 변경하세요.
+## 0. Execution
+
+### Running with Docker
+
+> Change the database connection information as needed.
 
 ```
 docker run -d --name mcp-mysql \
@@ -19,179 +25,177 @@ docker run -d --name mcp-mysql \
   -p 3306:3306 mineru/mcp-mysql:1.0.0
 ```
 
-### 도커 컴포즈로 구동
+### Running with Docker Compose
 
-> 미리 만들어둔 셋팅에서 진행하게 됩니다.
+> This will proceed with a pre-configured setup.
 
 ```
-docker-compose up -d 
+docker-compose up -d
 ```
 
-### 파이썬으로 직접 구동
+### Running directly with Python
 
 ```
 pip install -r requirements.txt
 python mysql_mcp_server/main.py run
 ```
 
-### Cursor 설정
+### Cursor Configuration
 
-> cursor 0.46 버전 이상 부터 MCP 기능을 제공합니다.
-> 
-> 또한, MCP 기능은 Cursor Pro 계정 사용자만 사용할 수 있습니다.
+> MCP functionality is available from Cursor version 0.46 and above.
+>
+> Additionally, the MCP feature is only accessible to Cursor Pro account users.
 
 ![Cursor Setting](assets/cursor_setting.png)
 
+### Tool Addition Tips
 
-### Tool 추가 Tips
-
-- Tool 추가
-  - `excute` 함수들은 실제 로직을 동작하게 만들어줍니다.(Service Layer)
-  - `@tool` 데코레이터는 MCP에 도구를 명세 등록을 도와줍니다.(Controller Layer)
-- 설명
-  - `mysql_mcp_server/executors` 아래에 파일당 도구 하나 라고 봐야 합니다.
-  - 도구를 하나 추가했다면, `mysql_mcp_server/executors/__init__.py` 파일에서 `import` 하고, __all__ 배열에도 추가해줍니다.
-  그럼 `TOOLS_DEFINITION` 변수에 모듈들이 자동 등록이 됩니다.
+- Adding a Tool
+  - `execute` functions implement the actual logic execution (Service Layer).
+  - The `@tool` decorator helps register the tool with MCP (Controller Layer).
+- Explanation
+  - Each file under `mysql_mcp_server/executors` represents a single tool.
+  - If a new tool is added, it must be imported in `mysql_mcp_server/executors/__init__.py` and included in the `__all__` array.
+  - This ensures the module is automatically registered in the `TOOLS_DEFINITION` variable.
   
-
 ```mermaid
 flowchart LR;
-    A[AI 모델] -->|도구 목록 요청| B[MCP 서버]
-    B -->|사용 가능한 도구 목록 반환| A
+    A[AI Model] -->|Request tool list| B[MCP Server]
+    B -->|Return available tools| A
 
-    A -->|특정 도구 호출 요청| B
-    B -->|해당 실행기 호출| C[Executors]
+    A -->|Request specific tool execution| B
+    B -->|Call the corresponding executor| C[Executors]
     
     subgraph Executors
-        C1[execute_create_table] -->|테이블 생성| D
-        C2[execute_desc_table] -->|테이블 스키마 확인| D
-        C3[execute_explain] -->|쿼리 실행 계획| D
-        C4[execute_select_query] -->|SELECT 쿼리 실행| D
-        C5[execute_show_tables] -->|테이블 목록 조회| D
+        C1[execute_create_table] -->|Create table| D
+        C2[execute_desc_table] -->|View table schema| D
+        C3[execute_explain] -->|Query execution plan| D
+        C4[execute_select_query] -->|Execute SELECT query| D
+        C5[execute_show_tables] -->|Retrieve table list| D
     end
 
-    D[DatabaseManager] -->|MySQL 연결| E[MySQL 8.0]
+    D[DatabaseManager] -->|Connect to MySQL| E[MySQL 8.0]
 
-    E -->|결과 반환| D
-    D -->|결과 전달| C
-    C -->|결과 반환| B
-    B -->|작업 결과 반환| A
+    E -->|Return results| D
+    D -->|Send results| C
+    C -->|Return results| B
+    B -->|Return execution results| A
 ```
 
+## 1. Overview
 
-## 1. 개요
+MCP MySQL Server is a server application for MySQL database operations based on MCP (Model Context Protocol). This server provides tools that allow AI models to interact with the MySQL database.
 
-MCP MySQL Server는 MCP(Model Control Protocol) 기반의 MySQL 데이터베이스 작업을 위한 서버 애플리케이션입니다. 이 서버는 AI 모델이 MySQL 데이터베이스와 상호작용할 수 있도록 도구(Tools)를 제공합니다.
+## 2. System Configuration
 
-## 2. 시스템 구성
+### 2.1 Key Components
 
-### 2.1 주요 컴포넌트
+- **MCP Server**: A FastMCP or stdio-based server that communicates with AI models
+- **MySQL Database**: Manages and stores data
+- **Tools**: Executors that perform database operations
 
-- **MCP 서버**: FastMCP 또는 stdio 기반 서버로 AI 모델과의 통신을 담당
-- **MySQL 데이터베이스**: 데이터 저장 및 관리
-- **도구(Tools)**: 데이터베이스 작업을 수행하는 실행기(Executors)
+### 2.2 Tech Stack
 
-### 2.2 기술 스택
+- **Language**: Python
+- **Database**: MySQL 8.0
+- **Key Libraries**:
+  - mcp: Implements Model Context Protocol for AI communication
+  - PyMySQL: Connects to MySQL and executes queries
+  - pandas: Processes and analyzes data
+  - python-dotenv: Manages environment variables
+  - fire: Implements command-line interfaces
 
-- **언어**: Python
-- **데이터베이스**: MySQL 8.0
-- **주요 라이브러리**:
-  - mcp: AI 모델과의 통신을 위한 Model Control Protocol 구현
-  - PyMySQL: MySQL 데이터베이스 연결 및 쿼리 실행
-  - pandas: 데이터 처리 및 분석
-  - python-dotenv: 환경 변수 관리
-  - fire: 명령줄 인터페이스 구현
+### 2.3 Deployment Environment
 
-### 2.3 배포 환경
+- Containerized deployment via Docker and Docker Compose
+- Ports: 8081 (MCP Server), 3306 (MySQL)
 
-- Docker 및 Docker Compose를 통한 컨테이너화 배포
-- 포트: 8081 (MCP 서버), 3306 (MySQL)
-
-## 3. 디렉토리 구조
+## 3. Directory Structure
 
 ```
 MCPMySQLBoilerPlate/
-├── mysql_mcp_server/           # 메인 애플리케이션 디렉토리
-│   ├── executors/              # 데이터베이스 작업 실행기
-│   │   ├── create_table.py     # 테이블 생성 도구
-│   │   ├── desc_table.py       # 테이블 스키마 확인 도구
-│   │   ├── explain.py          # 쿼리 실행 계획 도구
-│   │   ├── select_query.py     # SELECT 쿼리 실행 도구
-│   │   └── show_tables.py      # 테이블 목록 조회 도구
-│   ├── handlers/               # MCP 요청 처리기
-│   │   ├── call_tool.py        # 도구 호출 처리
-│   │   └── list_tools.py       # 도구 목록 제공
-│   ├── helper/                 # 유틸리티 모듈
-│   │   ├── db_conn_helper.py   # 데이터베이스 연결 관리
-│   │   ├── logger_helper.py    # 로깅 유틸리티
-│   │   └── tool_decorator.py   # 도구 데코레이터
-│   └── main.py                 # 애플리케이션 진입점
-├── docker-compose.yml          # Docker Compose 설정
-├── Dockerfile                  # Docker 이미지 빌드 설정
-├── requirements.txt            # 의존성 패키지 목록
-└── .env.example                # 환경 변수 예시
+├── mysql_mcp_server/           # Main application directory
+│   ├── executors/              # Database operation executors
+│   │   ├── create_table.py     # Tool for creating tables
+│   │   ├── desc_table.py       # Tool for viewing table schema
+│   │   ├── explain.py          # Tool for query execution plans
+│   │   ├── select_query.py     # Tool for SELECT query execution
+│   │   └── show_tables.py      # Tool for retrieving table lists
+│   ├── handlers/               # MCP request handlers
+│   │   ├── call_tool.py        # Handles tool execution
+│   │   └── list_tools.py       # Provides tool list
+│   ├── helper/                 # Utility modules
+│   │   ├── db_conn_helper.py   # Manages database connections
+│   │   ├── logger_helper.py    # Logging utilities
+│   │   └── tool_decorator.py   # Tool decorator
+│   ├── models/                 # Data models
+│   └── main.py                 # Application entry point
+├── docker-compose.yml          # Docker Compose configuration
+├── Dockerfile                  # Docker image build settings
+├── requirements.txt            # Dependency package list
+└── .env.example                # Example environment variables file
 ```
 
-## 4. 아키텍처 설계
+## 4. Architecture Design
 
-### 4.1 계층 구조
+### 4.1 Layered Structure
 
-1. **인터페이스 계층**: MCP 서버 (FastMCP 또는 stdio)
-2. **비즈니스 로직 계층**: 핸들러 및 실행기
-3. **데이터 액세스 계층**: 데이터베이스 연결 및 쿼리 실행
+1. **Interface Layer**: MCP Server (FastMCP or stdio)
+2. **Business Logic Layer**: Handlers and Executors
+3. **Data Access Layer**: Database connection and query execution
 
-### 4.2 주요 클래스 및 모듈
+### 4.2 Key Classes and Modules
 
-- **MySQLMCPServer**: 메인 서버 클래스로 MCP 서버 초기화 및 실행
-- **DatabaseManager**: 싱글톤 패턴을 사용한 데이터베이스 연결 관리자
-- **Executors**: 데이터베이스 작업을 수행하는 도구 모음
-  - execute_create_table: 테이블 생성
-  - execute_desc_table: 테이블 스키마 확인
-  - execute_explain: 쿼리 실행 계획
-  - execute_select_query: SELECT 쿼리 실행
-  - execute_show_tables: 테이블 목록 조회
+- **MySQLMCPServer**: Main server class that initializes and runs the MCP server
+- **DatabaseManager**: Singleton pattern-based database connection manager
+- **Executors**: Collection of tools for database operations
+  - execute_create_table: Creates tables
+  - execute_desc_table: Checks table schema
+  - execute_explain: Provides query execution plans
+  - execute_select_query: Executes SELECT queries
+  - execute_show_tables: Retrieves table lists
 
-### 4.3 통신 흐름
+### 4.3 Communication Flow
 
-1. AI 모델이 MCP 서버에 도구 목록 요청
-2. 서버가 사용 가능한 도구 목록 반환
-3. AI 모델이 특정 도구 호출 요청
-4. 서버가 해당 도구의 실행기를 호출하여 데이터베이스 작업 수행
-5. 작업 결과를 AI 모델에 반환
+1. AI model requests a list of available tools from the MCP server.
+2. The server returns the available tools list.
+3. The AI model requests the execution of a specific tool.
+4. The server calls the corresponding executor to perform the database operation.
+5. The execution results are returned to the AI model.
 
-## 5. 확장성 및 유지보수
+## 5. Scalability and Maintenance
 
-- **도구 추가**: executors 디렉토리에 새로운 도구 구현 후 `__init__.py`에 등록
-- **환경 설정**: .env 파일을 통한 환경 변수 관리
-- **로깅**: logger_helper를 통한 일관된 로깅 시스템
+- **Adding Tools**: Implement new tools in the `executors` directory and register them in `__init__.py`.
+- **Environment Configuration**: Manage environment variables via the `.env` file.
+- **Logging**: Ensure consistent logging using `logger_helper`.
 
-## 6. 배포 및 실행
+## 6. Deployment and Execution
 
-### 6.1 로컬 실행
+### 6.1 Local Execution
 
 ```bash
-# 환경 설정
+# Setup environment
 cp .env.example .env
-# 필요에 따라 .env 파일 수정
+# Modify .env file as needed
 
-# 의존성 설치
+# Install dependencies
 pip install -r requirements.txt
 
-# 서버 실행
+# Run the server
 python mysql_mcp_server/main.py run
 ```
 
-### 6.2 Docker 배포
+### 6.2 Docker Deployment
 
 ```bash
-# Docker Compose로 DB 실행
+# Start database using Docker Compose
 docker-compose up -d db
-# Docker Compose로 mysql mcp server 이미지 빌드 후 실행(재빌드 포함)
-docker-compose up -d --build mysql-mcp-server 
+# Build and run mysql-mcp-server with Docker Compose (including rebuilds)
+docker-compose up -d --build mysql-mcp-server
 ```
 
-## 7. 보안 고려사항
+## 7. Security Considerations
 
-- 데이터베이스 자격 증명은 환경 변수를 통해 관리
-- 프로덕션 환경에서는 강력한 비밀번호 사용 권장
-- 필요한 경우 SSL/TLS를 통한 데이터베이스 연결 암호화 구현 고려
+- Manage database credentials via environment variables.
+- Use strong passwords in production environments.
+- Consider implementing SSL/TLS encryption for database connections when necessary.
