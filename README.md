@@ -2,17 +2,31 @@
 
 > --stdio 실행 방식은 현재 개발 단계에 있습니다.
 
-## 0. 실습
+## 0. 실행
 
-### 설치
+### 도커로 구동(원하시는 디비 커넥션 정보로 변경하세요.)
+
+```
+docker run -d --name mcp-mysql \
+  -e MYSQL_HOST=localhost \
+  -e MYSQL_PORT=3306 \
+  -e MYSQL_USER=root \
+  -e MYSQL_PASSWORD=mcpTest1234!!! \
+  -e MYSQL_DATABASE=mcp_test \
+  -e MCP_PORT=8081 \
+  -p 3306:3306 mineru/mcp-mysql:1.0.0
+```
+
+### 도커 컴포즈로 구동(미리 만들어둔 셋팅에서 진행하게 됩니다.)
+
+```
+docker-compose up -d 
+```
+
+### 파이썬으로 직접 구동
 
 ```
 pip install -r requirements.txt
-```
-
-### 실행
-
-```bash
 python mysql_mcp_server/main.py run
 ```
 
@@ -50,7 +64,6 @@ flowchart LR;
     C -->|결과 반환| B
     B -->|작업 결과 반환| A
 ```
-
 
 
 ## 1. 개요
