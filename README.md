@@ -158,7 +158,7 @@ MCPMySQLBoilerPlate/
 
 ## 5. 확장성 및 유지보수
 
-- **도구 추가**: executors 디렉토리에 새로운 도구 구현 후 __init__.py에 등록
+- **도구 추가**: executors 디렉토리에 새로운 도구 구현 후 `__init__.py`에 등록
 - **환경 설정**: .env 파일을 통한 환경 변수 관리
 - **로깅**: logger_helper를 통한 일관된 로깅 시스템
 
