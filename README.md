@@ -1,4 +1,4 @@
-# MCPMySQLBoilerPlate
+# mysql-mcp-server
 
 > --stdio 실행 방식은 현재 개발 단계에 있습니다.
 
