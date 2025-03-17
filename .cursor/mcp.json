@@ -1,0 +1,7 @@
+{
+    "mcpServers": {
+      "mysql-mcp": {
+        "url": "http://localhost:8081/sse"
+      }
+    }
+  }

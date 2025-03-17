@@ -34,6 +34,11 @@ pip install -r requirements.txt
 python mysql_mcp_server/main.py run
 ```
 
+### Cursor 설정
+
+![Cursor Setting](assets/cursor_setting.png)
+
+
 ### Tool 추가 Tips
 
 - Tool 추가
