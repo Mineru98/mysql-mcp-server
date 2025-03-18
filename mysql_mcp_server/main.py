@@ -9,12 +9,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import fire
 import pymysql.cursors
 from dotenv import load_dotenv
-from mcp.server import Server
 from mcp.server.fastmcp import FastMCP
-from mcp.server.stdio import stdio_server
 
 from mysql_mcp_server.executors import TOOLS_DEFINITION
-from mysql_mcp_server.handlers import handle_call_tool, handle_list_tools
 from mysql_mcp_server.helper.db_conn_helper import DatabaseManager
 from mysql_mcp_server.helper.logger_helper import logger
 
@@ -51,14 +48,9 @@ class MySQLMCPServer:
             logger.error(f"MySQL 연결 오류: {e}")
             sys.exit(1)
 
-        if self.stdio:
-            self.server = Server("MySQL MCP 서버")
-            self.server.list_tools()(handle_list_tools)
-            self.server.call_tool()(handle_call_tool)
-        else:
-            logger.info(f"서버가 포트 {self.port}에서 시작됩니다.")
-            self.mcp = FastMCP(name="MySQL MCP 서버", debug=True, port=self.port)
-            self.__setup_tools()
+        logger.info(f"서버가 포트 {self.port}에서 시작됩니다.")
+        self.mcp = FastMCP(name="MySQL MCP 서버", debug=True, port=self.port)
+        self.__setup_tools()
 
     def __connect_to_mysql(self):
         db_manager = DatabaseManager.get_instance()
@@ -69,19 +61,9 @@ class MySQLMCPServer:
         for tool_schema in TOOLS_DEFINITION:
             self.mcp.tool()(tool_schema)
 
-    async def __stdio_main(self):
-        async with stdio_server() as (read_stream, write_stream):
-            await self.server.run(
-                read_stream, write_stream, self.server.create_initialization_options(), raise_exceptions=True
-            )
-
     def run(self):
-        if self.stdio:
-            logger.info("Starting MCP...")
-            asyncio.run(self.__stdio_main())
-        else:
-            logger.info("Starting MCP server...")
-            self.mcp.run(transport="sse")
+        logger.info("Starting MCP server...")
+        self.mcp.run(transport="sse")
 
 
 def main():
