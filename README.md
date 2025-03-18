@@ -113,7 +113,7 @@ MCP MySQL Server is a server application for MySQL database operations based on 
 ## 3. Directory Structure
 
 ```
-MCPMySQLBoilerPlate/
+MCPBoilerPlate/
 ├── mysql_mcp_server/           # Main application directory
 │   ├── executors/              # Database operation executors
 │   │   ├── create_table.py     # Tool for creating tables

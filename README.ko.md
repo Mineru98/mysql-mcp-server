@@ -115,7 +115,7 @@ MCP MySQL Server는 MCP(Model Context Protocol) 기반의 MySQL 데이터베이�
 ## 3. 디렉토리 구조
 
 ```
-MCPMySQLBoilerPlate/
+MCPBoilerPlate/
 ├── mysql_mcp_server/           # 메인 애플리케이션 디렉토리
 │   ├── executors/              # 데이터베이스 작업 실행기
 │   │   ├── create_table.py     # 테이블 생성 도구
