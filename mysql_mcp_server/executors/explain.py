@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import json
-from typing import List, Optional
+from typing import List
 
 from mcp.types import TextContent
 
@@ -23,8 +23,8 @@ def execute_explain(query: str) -> List[TextContent]:
     try:
         with conn.cursor() as cursor:
             logger.info(f"[execute_explain] query: {query}")
-            cursor.execute(query)
             if query.strip().upper().startswith("EXPLAIN"):
+                cursor.execute(query)
                 result = cursor.fetchall()
                 response_data = {"success": True, "data": result}
             else:

@@ -27,9 +27,12 @@ def execute_create_table(query: str) -> List[TextContent]:
     try:
         with conn.cursor() as cursor:
             logger.info(f"[execute_create_table] query: {query}")
-            cursor.execute(query)
-            conn.commit()
-            response_data = {"success": True, "affected_rows": cursor.rowcount}
+            if query.strip().upper().startswith("CREATE TABLE"):
+                cursor.execute(query)
+                conn.commit()
+                response_data = {"success": True, "affected_rows": cursor.rowcount}
+            else:
+                response_data = {"success": False, "error": "Invalid query"}
     except Exception as e:
         response_data = {"success": False, "error": str(e)}
 

@@ -23,9 +23,12 @@ def execute_show_tables(query: str) -> List[TextContent]:
     try:
         with conn.cursor() as cursor:
             logger.info(f"[execute_show_tables] query: {query}")
-            cursor.execute(query)
-        result = cursor.fetchall()
-        response_data = {"success": True, "data": result}
+            if query.strip().upper().startswith("SHOW"):
+                cursor.execute(query)
+                result = cursor.fetchall()
+                response_data = {"success": True, "data": result}
+            else:
+                response_data = {"success": False, "error": "Invalid query"}
     except Exception as e:
         response_data = {"success": False, "error": str(e)}
 
