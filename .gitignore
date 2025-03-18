@@ -174,3 +174,4 @@ cython_debug/
 .pypirc
 
 test*.py
+!test/test*.py
