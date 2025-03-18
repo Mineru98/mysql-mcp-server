@@ -35,6 +35,11 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
 
             response_data = await asyncio.to_thread(execute_select_query, query=query)
             return [response_data]
+        elif name == "execute_insert_query":
+            query = arguments.get("query", "").strip()
+
+            response_data = await asyncio.to_thread(execute_insert_query, query=query)
+            return [response_data]
         elif name == "execute_show_tables":
             query = arguments.get("query", "").strip()
 
