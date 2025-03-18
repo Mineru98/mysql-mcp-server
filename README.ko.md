@@ -71,8 +71,9 @@ flowchart LR;
         C1[execute_create_table] -->|테이블 생성| D
         C2[execute_desc_table] -->|테이블 스키마 확인| D
         C3[execute_explain] -->|쿼리 실행 계획| D
-        C4[execute_select_query] -->|SELECT 쿼리 실행| D
-        C5[execute_show_tables] -->|테이블 목록 조회| D
+        C4[execute_insert_query] -->|INSERT 쿼리 실행| D
+        C5[execute_select_query] -->|SELECT 쿼리 실행| D
+        C6[execute_show_tables] -->|테이블 목록 조회| D
     end
 
     D[DatabaseManager] -->|MySQL 연결| E[MySQL 8.0]
@@ -121,6 +122,7 @@ MCPBoilerPlate/
 │   │   ├── create_table.py     # 테이블 생성 도구
 │   │   ├── desc_table.py       # 테이블 스키마 확인 도구
 │   │   ├── explain.py          # 쿼리 실행 계획 도구
+│   │   ├── insert_query.py     # INSERT 쿼리 실행 도구
 │   │   ├── select_query.py     # SELECT 쿼리 실행 도구
 │   │   └── show_tables.py      # 테이블 목록 조회 도구
 │   ├── handlers/               # MCP 요청 처리기
@@ -154,6 +156,7 @@ MCPBoilerPlate/
   - execute_create_table: 테이블 생성
   - execute_desc_table: 테이블 스키마 확인
   - execute_explain: 쿼리 실행 계획
+  - execute_insert_query: INSERT 쿼리 실행
   - execute_select_query: SELECT 쿼리 실행
   - execute_show_tables: 테이블 목록 조회
 

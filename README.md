@@ -70,8 +70,9 @@ flowchart LR;
         C1[execute_create_table] -->|Create table| D
         C2[execute_desc_table] -->|View table schema| D
         C3[execute_explain] -->|Query execution plan| D
-        C4[execute_select_query] -->|Execute SELECT query| D
-        C5[execute_show_tables] -->|Retrieve table list| D
+        C4[execute_insert_query] -->|Execute INSERT query| D
+        C5[execute_select_query] -->|Execute SELECT query| D
+        C6[execute_show_tables] -->|Retrieve table list| D
     end
 
     D[DatabaseManager] -->|Connect to MySQL| E[MySQL 8.0]
@@ -119,6 +120,7 @@ MCPBoilerPlate/
 │   │   ├── create_table.py     # Tool for creating tables
 │   │   ├── desc_table.py       # Tool for viewing table schema
 │   │   ├── explain.py          # Tool for query execution plans
+│   │   ├── insert_query.py     # Tool for INSERT query execution
 │   │   ├── select_query.py     # Tool for SELECT query execution
 │   │   └── show_tables.py      # Tool for retrieving table lists
 │   ├── handlers/               # MCP request handlers
@@ -152,6 +154,7 @@ MCPBoilerPlate/
   - execute_create_table: Creates tables
   - execute_desc_table: Checks table schema
   - execute_explain: Provides query execution plans
+  - execute_insert_query: Executes INSETR queries
   - execute_select_query: Executes SELECT queries
   - execute_show_tables: Retrieves table lists
 
