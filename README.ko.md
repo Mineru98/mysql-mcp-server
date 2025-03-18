@@ -1,8 +1,6 @@
 
 # mysql-mcp-server
 
-> --stdio 실행 방식은 현재 개발 단계에 있습니다.
-
 <a href="https://glama.ai/mcp/servers/6y836dz8o5">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/6y836dz8o5/badge" />
 </a>
@@ -92,6 +90,11 @@ flowchart LR;
 - Feature ✨
   - [ ] 데이터 분석 보고서 작성 기능 📊 : 사용자의 요청에 맞는 여러가지 차트를 적절하게 모델이 선택할 수 있게 최적화 한 보고서 작성 기능 제공 📈
   - [ ] Text2SQL 확장 지원 🗄️
+  - [ ] SSH 접속 지원 🔑 : SSH를 통한 보안 원격 액세스 사용 
+  - [ ] 파일 추출 기능 📥
+    - [ ] CSV 📄
+    - [ ] JSON 📑
+    - [ ] Excel 📉
 
 
 ## 1. 개요
@@ -102,7 +105,7 @@ MCP MySQL Server는 MCP(Model Context Protocol) 기반의 MySQL 데이터베이�
 
 ### 2.1 주요 컴포넌트
 
-- **MCP 서버**: FastMCP 또는 stdio 기반 서버로 AI 모델과의 통신을 담당
+- **MCP 서버**: FastMCP 기반 서버로 AI 모델과의 통신을 담당
 - **MySQL 데이터베이스**: 데이터 저장 및 관리
 - **도구(Tools)**: 데이터베이스 작업을 수행하는 실행기(Executors)
 
@@ -134,14 +137,10 @@ MCPBoilerPlate/
 │   │   ├── insert_query.py     # INSERT 쿼리 실행 도구
 │   │   ├── select_query.py     # SELECT 쿼리 실행 도구
 │   │   └── show_tables.py      # 테이블 목록 조회 도구
-│   ├── handlers/               # MCP 요청 처리기
-│   │   ├── call_tool.py        # 도구 호출 처리
-│   │   └── list_tools.py       # 도구 목록 제공
 │   ├── helper/                 # 유틸리티 모듈
 │   │   ├── db_conn_helper.py   # 데이터베이스 연결 관리
 │   │   ├── logger_helper.py    # 로깅 유틸리티
 │   │   └── tool_decorator.py   # 도구 데코레이터
-│   ├── models/                 # 데이터 모델
 │   └── main.py                 # 애플리케이션 진입점
 ├── docker-compose.yml          # Docker Compose 설정
 ├── Dockerfile                  # Docker 이미지 빌드 설정
@@ -153,7 +152,7 @@ MCPBoilerPlate/
 
 ### 4.1 계층 구조
 
-1. **인터페이스 계층**: MCP 서버 (FastMCP 또는 stdio)
+1. **인터페이스 계층**: MCP 서버 (FastMCP)
 2. **비즈니스 로직 계층**: 핸들러 및 실행기
 3. **데이터 액세스 계층**: 데이터베이스 연결 및 쿼리 실행
 

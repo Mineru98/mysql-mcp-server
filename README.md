@@ -4,8 +4,6 @@
   <img width="380" height="200" src="https://glama.ai/mcp/servers/6y836dz8o5/badge" />
 </a>
 
-> --stdio execution mode is currently in the development phase.
-
 [한국어 README.md](https://github.com/Mineru98/mysql-mcp-server/blob/main/README.ko.md)
 
 ## 0. Execution
@@ -91,6 +89,11 @@ flowchart LR;
 - Features ✨
   - [ ] Data Analysis Report Generation 📊: Provide a report generation function optimized for the model to appropriately select various charts based on user requests 📈
   - [ ] Extended Text2SQL Support 🗄️
+  - [ ] SSH Connection Support 🌐: Enable secure remote access via SSH for advanced operations 🔑
+  - [ ] File Extraction Function 📥
+    - [ ] CSV 📄
+    - [ ] JSON 📑
+    - [ ] Excel 📉
 
 ## 1. Overview
 
@@ -100,7 +103,7 @@ MCP MySQL Server is a server application for MySQL database operations based on 
 
 ### 2.1 Key Components
 
-- **MCP Server**: A FastMCP or stdio-based server that communicates with AI models
+- **MCP Server**: A FastMCP server that communicates with AI models
 - **MySQL Database**: Manages and stores data
 - **Tools**: Executors that perform database operations
 
@@ -132,14 +135,10 @@ MCPBoilerPlate/
 │   │   ├── insert_query.py     # Tool for INSERT query execution
 │   │   ├── select_query.py     # Tool for SELECT query execution
 │   │   └── show_tables.py      # Tool for retrieving table lists
-│   ├── handlers/               # MCP request handlers
-│   │   ├── call_tool.py        # Handles tool execution
-│   │   └── list_tools.py       # Provides tool list
 │   ├── helper/                 # Utility modules
 │   │   ├── db_conn_helper.py   # Manages database connections
 │   │   ├── logger_helper.py    # Logging utilities
 │   │   └── tool_decorator.py   # Tool decorator
-│   ├── models/                 # Data models
 │   └── main.py                 # Application entry point
 ├── docker-compose.yml          # Docker Compose configuration
 ├── Dockerfile                  # Docker image build settings
@@ -151,7 +150,7 @@ MCPBoilerPlate/
 
 ### 4.1 Layered Structure
 
-1. **Interface Layer**: MCP Server (FastMCP or stdio)
+1. **Interface Layer**: MCP Server (FastMCP)
 2. **Business Logic Layer**: Handlers and Executors
 3. **Data Access Layer**: Database connection and query execution
 
