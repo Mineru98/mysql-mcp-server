@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2018년 판매 상품 분석 보고서</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://unpkg.com/feather-icons@4.29.1"></script>
+    <script src="https://unpkg.com/apexcharts@4.5.0"></script>
+    <style>
+        :root {
+            --primary-color: #8A6AF2;
+            --primary-light: #B39DFF;
+            --primary-dark: #6845E0;
+            --accent-color: #F3F0FF;
+            --text-primary: #333;
+            --text-secondary: #666;
+        }
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F8F7FC;
+            color: var(--text-primary);
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .card-header {
+            border-bottom: 1px solid #eee;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+        
+        .analysis-section {
+            border-left: 4px solid var(--primary-color);
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .header-section {
+            background: linear-gradient(to right, var(--primary-light), var(--primary-color));
+            color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-6">
+        <div class="header-section">
+            <h1 class="header-title text-3xl font-bold">2018년 판매 상품 분석 보고서</h1>
+            <p class="header-subtitle text-lg mt-2">2018년 1-2월 판매 데이터 기반 분석</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="stat-card">
+                    <div class="stat-value">26,445</div>
+                    <div class="stat-label">총 판매 기록</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">15,522</div>
+                    <div class="stat-label">총 상품 수</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">153,596</div>
+                    <div class="stat-label">총 소매 판매액</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">302</div>
+                    <div class="stat-label">공급업체 수</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">제품 유형별 판매 비율</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="pieChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">와인 제품이 38.5%로 가장 높은 매출 비중을 차지했으며, 주류(37.4%)와 맥주(23.0%)가 그 뒤를 이었습니다. 비알코올 제품은 1.0%로 매우 적은 비중을 차지했습니다. 와인과 주류가 전체 매출의 75% 이상을 차지하는 것으로 보아 이 두 카테고리에 마케팅 자원을 집중하는 것이 효과적일 것입니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">월별 판매 추이</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="lineChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">1월에서 2월로 넘어가면서 판매액이 75,792원에서 77,804원으로 2.7% 증가했습니다. 판매 기록 수는 소폭 감소했지만 판매 금액은 증가했다는 점에서 고가 상품의
+                        판매 비중이 높아졌음을 알 수 있습니다. 이러한 증가 추세가 계속된다면 연간 목표 달성이 가능할 것으로 전망됩니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">인기 상품 TOP 5</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="barChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">상위 5개 인기 상품 중 맥주 제품이 3개, 주류 제품이 2개를 차지했습니다. 특히 코로나와 하이네켄 맥주가 상위권을 차지하고 있어 수입 맥주에 대한 선호도가 높은 것으로 보입니다. 보드카 제품(티토스, 보우맨스)도 높은 판매액을 기록했습니다. 이 상위 제품들의 재고를 충분히 유지하는 것이 중요합니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">주요 공급업체 TOP 5</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="columnChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">E & J GALLO WINERY와 CONSTELLATION BRANDS가 각각 11,568원과 11,413원의 판매액으로 최상위 공급업체입니다. 상위 5개 공급업체가 전체 판매액의 약 31%를 차지하고 있어 이들과의 전략적 파트너십이 중요합니다. 특히 E & J GALLO는 가장 많은 464개의 제품 라인업을 보유하고 있어 다양한 소비자 취향을 충족시킬 수 있는 중요한 파트너입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-card mt-8">
+            <div class="card-header">
+                <h2 class="card-title">종합 분석 및 제언</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-lg mb-3 text-[var(--primary-dark)]">주요 발견점</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>와인과 주류 제품이 전체 판매액의 약 76%를 차지</li>
+                            <li>맥주 제품이 창고 판매량의 대부분(82%)을 차지</li>
+                            <li>인기 상품 중 맥주 브랜드(코로나, 하이네켄)의 강세 두드러짐</li>
+                            <li>소수의 대형 공급업체가 시장 점유율의 큰 부분을 차지</li>
+                            <li>2월 판매 데이터는 1월 대비 판매액 증가 추세 보임</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg mb-3 text-[var(--primary-dark)]">전략적 제언</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>와인과 주류 카테고리에 마케팅 자원 집중 투자</li>
+                            <li>인기 맥주 브랜드의 재고 최적화 및 프로모션 강화</li>
+                            <li>E & J GALLO, CONSTELLATION BRANDS와 같은 주요 공급업체와의 관계 강화</li>
+                            <li>판매 증가 추세를 유지하기 위한 시즌별 프로모션 전략 개발</li>
+                            <li>고객 선호도가 높은 보드카 제품군 확대 검토</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 공통 차트 옵션
+        const commonOptions = {
+            chart: {
+                height: 300,
+                fontFamily: "Pretendard",
+                toolbar: {
+                    show: false
+                }
+            },
+            colors: [
+                "#8A6AF2",
+                "#B39DFF",
+                "#6845E0",
+                "#F3F0FF",
+                "#4ECDC4",
+                "#FF6B6B",
+                "#FFE66D",
+                "#1A535C"
+            ],
+            stroke: {
+                curve: "smooth",
+                width: 2
+            },
+            grid: {
+                borderColor: "#f1f1f1",
+                row: {
+                    colors: [
+                        "transparent",
+                        "transparent"
+                    ]
+                }
+            },
+            markers: {
+                size: 4,
+                colors: [
+                    "#8A6AF2",
+                    "#B39DFF",
+                    "#6845E0",
+                    "#F3F0FF",
+                    "#4ECDC4",
+                    "#FF6B6B",
+                    "#FFE66D",
+                    "#1A535C"
+                ],
+                strokeColors: "#fff",
+                strokeWidth: 2
+            },
+            tooltip: {
+                theme: "light",
+                marker: {
+                    show: true
+                }
+            }
+        };
+
+        // 제품 유형별 판매 비율 파이 차트
+        var pieChart = new ApexCharts(document.querySelector("#pieChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'pie' 
+            },
+            series: [59202, 57432, 35247, 1545],
+            labels: ['와인', '주류', '맥주', '비알코올'],
+            legend: {
+                position: 'bottom'
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 300
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        });
+
+        // 월별 판매 추이 라인 차트
+        var lineChart = new ApexCharts(document.querySelector("#lineChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'line' 
+            },
+            series: [{ name: '판매액', data: [75792, 77804] }],
+            xaxis: { categories: ['1월', '2월'] }
+        });
+
+        // 인기 상품 TOP 5 바 차트
+        var barChart = new ApexCharts(document.querySelector("#barChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'bar' 
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true
+                }
+            },
+            series: [{ name: '판매액', data: [1638, 1618, 1100, 1098, 797] }],
+            xaxis: { categories: ['코로나 맥주', '티토스 보드카', '하이네켄', '보우맨스 보드카', '코로나 6팩'] }
+        });
+
+        // 주요 공급업체 TOP 5 칼럼 차트
+        var columnChart = new ApexCharts(document.querySelector("#columnChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'bar' 
+            },
+            plotOptions: { 
+                bar: { 
+                    horizontal: false,
+                    borderRadius: 4,
+                    columnWidth: '60%'
+                } 
+            },
+            series: [{ name: '판매액', data: [11568, 11413, 10487, 7298, 7097] }],
+            xaxis: { categories: ['E & J GALLO', 'CONSTELLATION', 'DIAGEO', 'JIM BEAM', 'ANHEUSER BUSCH'] }
+        });
+
+        // 차트 렌더링
+        pieChart.render();
+        lineChart.render();
+        barChart.render();
+        columnChart.render();
+        
+        // 아이콘 초기화
+        feather.replace()
+    </script>
+</body>
+</html>
