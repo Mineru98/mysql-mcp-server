@@ -70,8 +70,10 @@ flowchart LR;
         C2[execute_desc_table] -->|테이블 스키마 확인| D
         C3[execute_explain] -->|쿼리 실행 계획| D
         C4[execute_insert_query] -->|INSERT 쿼리 실행| D
-        C5[execute_select_query] -->|SELECT 쿼리 실행| D
-        C6[execute_show_tables] -->|테이블 목록 조회| D
+        C5[execute_insight_starter] -->|보고서 작성을 위한 스키마 확인| D
+        C6[execute_invoke_viz_pro] -->|시각 자료 차트 추천| D
+        C7[execute_select_query] -->|SELECT 쿼리 실행| D
+        C8[execute_show_tables] -->|테이블 목록 조회| D
     end
 
     D[DatabaseManager] -->|MySQL 연결| E[MySQL 8.0]
@@ -135,6 +137,8 @@ MCPBoilerPlate/
 │   │   ├── desc_table.py       # 테이블 스키마 확인 도구
 │   │   ├── explain.py          # 쿼리 실행 계획 도구
 │   │   ├── insert_query.py     # INSERT 쿼리 실행 도구
+│   │   ├── insight_starter.py  # 보고서 작성을 위한 스키마 확인 도구
+│   │   ├── invoke_viz_pro.py   # 시각 자료 차트 추천 도구
 │   │   ├── select_query.py     # SELECT 쿼리 실행 도구
 │   │   └── show_tables.py      # 테이블 목록 조회 도구
 │   ├── helper/                 # 유틸리티 모듈
