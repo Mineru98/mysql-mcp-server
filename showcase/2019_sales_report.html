@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2019년 판매 분석 보고서</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://unpkg.com/feather-icons@4.29.1"></script>
+    <script src="https://unpkg.com/apexcharts@4.5.0"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        :root {
+            --primary-color: #1E88E5; /* 진한 파란색 */
+            --primary-light: #42A5F5; /* 중간 파란색 */
+            --primary-medium: #90CAF9; /* 연한 파란색 */
+            --primary-dark: #0D47A1; /* 매우 진한 파란색 */
+            --accent-color: #E3F2FD; /* 아주 연한 파란색 배경 */
+            --text-primary: #333;
+            --text-secondary: #666;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F8F7FC;
+            color: var(--text-primary);
+        }
+
+        .dashboard-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            border-bottom: 1px solid #f1f1f1;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+        }
+
+        .analysis-section {
+            border-left: 4px solid var(--primary-color);
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+
+        .header-section {
+            background: linear-gradient(to right, var(--primary-light), var(--primary-color));
+            color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .chart-container {
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-6">
+        <div class="header-section">
+            <h1 class="header-title text-3xl font-bold">2019년 판매 분석 보고서</h1>
+            <p class="header-subtitle text-lg mt-2">연간 판매 현황 및 트렌드 분석</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="stat-card">
+                    <div class="stat-value">₩960,191</div>
+                    <div class="stat-label">총 판매액</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">23,711</div>
+                    <div class="stat-label">총 상품 수</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">₩101,631</div>
+                    <div class="stat-label">최고 매출 월(11월)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">₩13,443</div>
+                    <div class="stat-label">최고 판매 상품 매출</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- 상품 유형별 판매액 -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">상품 유형별 판매액 (2019)</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="productTypeChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">2019년 주류 판매에서 리큐어(LIQUOR)가 총 357,077원으로 가장 높은 매출을 기록했으며, 와인(WINE)과 맥주(BEER)가 그 뒤를 이었습니다. 주류 외 상품(NON-ALCOHOL)은 상대적으로 낮은 판매액을 보였습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 월별 판매 추이 -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">월별 판매 추이 (2019)</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="monthlySalesChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">2019년 판매 추이는 연말로 갈수록 증가하는 경향을 보였으며, 특히 11월에 101,631원으로 가장 높은 매출을 기록했습니다. 계절적 요인으로 5월(94,953원)과 여름철(6-8월)에도 높은 판매액을 보였습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상위 판매 상품 -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">상위 10개 판매 상품 (2019)</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="topProductsChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">2019년 최고 판매 상품은 'TITO'S HANDMADE VODKA - 1.75L'로 13,443원의 매출을 기록했습니다. 상위 10개 상품 중 맥주 제품이 7개로 다수를 차지했으며, 그 중 'CORONA EXTRA LOOSE NR - 12OZ'가 12,100원으로 2위를 차지했습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 주요 공급업체 -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">주요 공급업체별 판매액 (2019)</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="supplierChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">'E & J GALLO WINERY'가 73,057원으로 가장 높은 매출을 기록한 공급업체였으며, 'DIAGEO NORTH AMERICA INC'와 'CONSTELLATION BRANDS'가 그 뒤를 이었습니다. 상위 10개 공급업체가 전체 판매의 상당 부분을 차지하고 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 공통 차트 옵션
+        const themeColors = ['#1E88E5', '#42A5F5', '#90CAF9', '#E3F2FD', '#0D47A1'];
+        
+        const commonOptions = {
+            chart: {
+                height: 300,
+                fontFamily: 'Pretendard',
+                toolbar: {
+                    show: false
+                }
+            },
+            colors: themeColors,
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
+            grid: {
+                borderColor: '#f1f1f1',
+                row: {
+                    colors: ['transparent', 'transparent']
+                }
+            },
+            markers: {
+                size: 4,
+                colors: themeColors,
+                strokeColors: '#fff',
+                strokeWidth: 2
+            },
+            tooltip: {
+                theme: 'light',
+                marker: {
+                    show: true
+                }
+            }
+        };
+
+        // 상품 유형별 판매액 차트
+        var productTypeChart = new ApexCharts(document.querySelector("#productTypeChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'bar' 
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true
+                }
+            },
+            series: [{ 
+                name: '판매액', 
+                data: [357077, 325113, 262480, 13985, 1277, 260] 
+            }],
+            xaxis: { 
+                categories: ['LIQUOR', 'WINE', 'BEER', 'NON-ALCOHOL', 'STR_SUPPLIES', 'REF'] 
+            }
+        });
+
+        // 월별 판매 추이 차트
+        var monthlySalesChart = new ApexCharts(document.querySelector("#monthlySalesChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'line' 
+            },
+            series: [{ 
+                name: '판매액', 
+                data: [76101, 80114, 84441, 80343, 94953, 90860, 90763, 90629, 82126, 88230, 101631] 
+            }],
+            xaxis: { 
+                categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월'] 
+            }
+        });
+
+        // 상위 판매 상품 차트
+        var topProductsChart = new ApexCharts(document.querySelector("#topProductsChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'bar' 
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true
+                }
+            },
+            series: [{ 
+                name: '판매액', 
+                data: [13443, 12100, 8729, 6850, 6779, 6181, 5737, 5596, 5254, 5009] 
+            }],
+            xaxis: { 
+                categories: ['TITOS VODKA', 'CORONA EXTRA', 'HEINEKEN', 'CORONA EXTRA 2/12', 'MILLER LITE 30PK', 'STELLA ARTOIS 2/12', 'BUD LIGHT 30PK', 'HEINEKEN 2/12', 'STELLA ARTOIS', 'BOWMANS VODKA'] 
+            }
+        });
+
+        // 공급업체별 판매액 차트
+        var supplierChart = new ApexCharts(document.querySelector("#supplierChart"), {
+            ...commonOptions,
+            chart: { 
+                ...commonOptions.chart,
+                type: 'pie' 
+            },
+            series: [73057, 64155, 58635, 48855, 42014, 41817, 38147, 31918, 28859, 27994],
+            labels: ['E & J GALLO', 'DIAGEO', 'CONSTELLATION', 'ANHEUSER BUSCH', 'JIM BEAM', 'CROWN IMPORTS', 'MILLER BREWING', 'SAZERAC CO', 'THE WINE GROUP', 'BACARDI USA'],
+            legend: {
+                position: 'bottom'
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 300
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        });
+
+        // 차트 렌더링
+        productTypeChart.render();
+        monthlySalesChart.render();
+        topProductsChart.render();
+        supplierChart.render();
+        
+        // 아이콘 초기화
+        feather.replace()
+    </script>
+</body>
+</html> 

@@ -5,10 +5,11 @@ alwaysApply: false
 ---
 # Cursor Rules for Dashboard Report Template
 
-## 프로젝트 개요
+## 보고서 개요
 - 역할: 데이터 분석 대시보드 HTML/CSS 템플릿 생성기
 - 기술 스택: HTML5, Tailwind CSS, ApexCharts, Pretendard 폰트
 - 목표: 일관된 디자인과 구조를 가진 데이터 분석 보고서 페이지 생성, 사용자 요청에 따라 색상 커스터마이징 가능
+- 필수 포함 사항: 이 보고서 내용을 기반으로 한 결과나 데이터를 기반으로 한 인사이트가 도출 된 내용이 포함
 
 ## 파일 구조 규칙
 - 파일 확장자: `.html`
