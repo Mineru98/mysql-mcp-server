@@ -85,17 +85,20 @@ flowchart LR;
 
 ## 🚧 Development Roadmap 🚧
 
-- Parameter Options ⚙️
-  - [ ] Enable/Disable Switch for Each Tool 🔧: Provide a function to reduce Input Context costs 💰
-  - [ ] Query Security Level Setting 🔒: Offer optional control over functions that could damage asset value, such as DROP, DELETE, UPDATE 🚫
-- Features ✨
-  - [x] Data Analysis Report Generation 📊: Provide a report generation function optimized for the model to appropriately select various charts based on user requests 📈
-  - [ ] Extended Text2SQL Support 🗄️
-  - [ ] SSH Connection Support 🌐: Enable secure remote access via SSH for advanced operations 🔑
-  - [ ] File Extraction Function 📥
-    - [ ] CSV 📄
-    - [ ] JSON 📑
-    - [ ] Excel 📉
+- ⚙️ Parameter Options  
+  - [ ] 🔧 Enable/Disable Switch for Each Tool: Provide a function to reduce Input Context costs 💰  
+  - [ ] 🔒 Query Security Level Setting: Offer optional control over functions that could damage asset value, such as DROP, DELETE, UPDATE 🚫  
+
+- ✨ Features  
+  - [x] 📊 Data Analysis Report Generation: Provide a report generation function optimized for the model to appropriately select various charts based on user requests 📈  
+      - [x] 📝 Reporting capabilities for prescribed forms  
+      - [ ] 🖌️ Diversify report templates  
+  - [ ] 🗄️ Extended Text2SQL Support  
+  - [ ] 🌐 SSH Connection Support: Enable secure remote access via SSH for advanced operations 🔑  
+  - [ ] 📥 File Extraction Function  
+    - [ ] 📄 CSV  
+    - [ ] 📑 JSON  
+    - [ ] 📉 Excel  
 
 ## 1. Overview
 
