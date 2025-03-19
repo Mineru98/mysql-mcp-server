@@ -81,13 +81,13 @@ flowchart LR;
     B -->|Return execution results| A
 ```
 
-## 🚧🚧🚧 Development Roadmap 🚧🚧🚧
+## 🚧 Development Roadmap 🚧
 
 - Parameter Options ⚙️
   - [ ] Enable/Disable Switch for Each Tool 🔧: Provide a function to reduce Input Context costs 💰
   - [ ] Query Security Level Setting 🔒: Offer optional control over functions that could damage asset value, such as DROP, DELETE, UPDATE 🚫
 - Features ✨
-  - [ ] Data Analysis Report Generation 📊: Provide a report generation function optimized for the model to appropriately select various charts based on user requests 📈
+  - [x] Data Analysis Report Generation 📊: Provide a report generation function optimized for the model to appropriately select various charts based on user requests 📈
   - [ ] Extended Text2SQL Support 🗄️
   - [ ] SSH Connection Support 🌐: Enable secure remote access via SSH for advanced operations 🔑
   - [ ] File Extraction Function 📥
