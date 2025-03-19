@@ -175,3 +175,4 @@ cython_debug/
 
 test*.py
 !test/test*.py
+*.xlsx
