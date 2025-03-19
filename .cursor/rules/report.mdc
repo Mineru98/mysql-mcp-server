@@ -1,0 +1,113 @@
+---
+description: 보고서를 작성할 때 참고하세요.
+globs: 
+alwaysApply: false
+---
+# Cursor Rules for Dashboard Report Template
+
+## 프로젝트 개요
+- 역할: 데이터 분석 대시보드 HTML/CSS 템플릿 생성기
+- 기술 스택: HTML5, Tailwind CSS, ApexCharts, Pretendard 폰트
+- 목표: 일관된 디자인과 구조를 가진 데이터 분석 보고서 페이지 생성, 사용자 요청에 따라 색상 커스터마이징 가능
+
+## 파일 구조 규칙
+- 파일 확장자: `.html`
+- DOCTYPE 선언으로 시작: `<!DOCTYPE html>`
+- 언어 설정: `<html lang="ko">`
+- 문자 인코딩: `<meta charset="UTF-8">`
+- 뷰포트 설정: `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+- 제목 형식: `<title>분석 보고서 대시보드</title>` (또는 유사한 주제 기반 제목)
+
+## 외부 리소스
+- Tailwind CSS: `<script src="https://cdn.tailwindcss.com/3.4.16"></script>`
+- Feather Icons: `<script src="https://unpkg.com/feather-icons@4.29.1"></script>`
+- ApexCharts: `<script src="https://unpkg.com/apexcharts@4.5.0"></script>`
+- Pretendard 폰트: `<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />`
+
+## CSS 스타일 규칙
+- 루트 변수 정의:
+  - 사용자가 색상을 제공하지 않을 경우 기본값 사용:
+    ```
+    :root {
+        --primary-color: #8A6AF2; /* 기본값, 사용자 지정 시 대체 */
+        --primary-light: #B39DFF; /* 기본값, 사용자 지정 시 대체 */
+        --primary-dark: #6845E0; /* 기본값, 사용자 지정 시 대체 */
+        --accent-color: #F3F0FF; /* 기본값, 사용자 지정 시 대체 */
+        --text-primary: #333;
+        --text-secondary: #666;
+    }
+    ```
+  - 사용자 요청 시: 사용자가 제공한 색상으로 `--primary-color`, `--primary-light`, `--primary-dark`, `--accent-color`를 동적으로 설정
+- 기본 스타일:
+  - 폰트: `font-family: 'Pretendard', sans-serif;`
+  - 배경색: `background-color: #F8F7FC;` (사용자가 요청 시 변경 가능)
+  - 텍스트 색상: `color: var(--text-primary);`
+- 클래스 기반 스타일:
+  - `.dashboard-card`: 흰색 배경, 둥근 모서리 (`rounded-lg`), 그림자 효과 (`shadow-md`), 호버 시 살짝 올라가는 애니메이션 (`hover:-translate-y-1`)
+  - `.card-header`: 하단 경계선 (`border-b`), 플렉스 레이아웃 (`flex justify-between items-center`), 제목 스타일
+  - `.analysis-section`: 왼쪽 테두리 (`border-l-4`) 색상은 `var(--primary-color)`, 배경색 `var(--accent-color)`
+  - `.header-section`: 그라데이션 배경 (`bg-gradient-to-r from-[var(--primary-light)] to-[var(--primary-color)]`), 둥근 모서리, 그림자 효과
+  - `.stat-card`: 중앙 정렬 (`text-center`), 그림자 포함 (`shadow-sm`)
+
+## HTML 구조 규칙
+- 최상위 컨테이너: `<div class="container mx-auto p- Booking6">`
+- 헤더 섹션:
+  - 클래스: `header-section`
+  - 구조:
+    ```
+    <div class="header-section">
+        <h1 class="header-title text-3xl">[타이틀]</h1>
+        <p class="header-subtitle text-lg">[서브타이틀]</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            [stat-card 반복]
+        </div>
+    </div>
+    ```
+  - 통계 카드: `<div class="stat-card"><div class="stat-value">[값]</div><div class="stat-label">[라벨]</div></div>`
+- 차트 섹션:
+  - 그리드 레이아웃: `<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">`
+  - 각 차트 카드:
+    ```
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h2 class="card-title">[차트 제목]</h2>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+            <div class="md:col-span-2">
+                <div id="[차트 ID]" class="chart-container"></div>
+            </div>
+            <div class="analysis-section">
+                <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                <p class="text-sm">[분석 내용]</p>
+            </div>
+        </div>
+    </div>
+    ```
+
+## 콘텐츠 규칙
+- 제목: `header-title`은 `text-3xl`, `header-subtitle`은 `text-lg`
+- 차트 제목: `.card-title`은 `font-weight: 600`, `font-size: 1.1rem`
+- 분석 섹션: `<h3>`는 `font-medium text-[var(--primary-dark)] mb-2`, `<p>`는 `text-sm`
+- 반응형 디자인:
+  - 모바일: `grid-cols-1`
+  - 데스크톱: `lg:grid-cols-2` 또는 `md:grid-cols-4` (헤더 통계 카드)
+
+## 색상 커스터마이징 규칙
+- 사용자가 색상을 요청하면:
+  1. 제공된 색상으로 `--primary-color`, `--primary-light`, `--primary-dark`, `--accent-color`를 `<style>` 태그 내 `:root`에서 재정의
+  2. 예: 사용자가 "primary: #FF5733" 요청 시:
+     ```
+     :root {
+         --primary-color: #FF5733;
+         --primary-light: [더 밝은 톤 계산, 예: #FF8C66];
+         --primary-dark: [더 어두운 톤 계산, 예: #CC4526];
+         --accent-color: [매칭되는 연한 색상, 예: #FFF0ED];
+     }
+     ```
+  3. 계산된 색상은 사용자가 명시하지 않은 경우 적절히 보완 (예: 밝기 조정)
+- 색상 미지정 시: 기본값(`#8A6AF2`, `#B39DFF`, `#6845E0`, `#F3F0FF`) 사용
+
+## 참고
+- 차트 데이터 및 ApexCharts 설정은 별도 `<script>` 태그에서 관리
+- 스타일과 구조는 사용자가 제공한 색상 팔레트를 기반으로 일관성 유지
+- 새로운 차트 추가 시, 기존 `dashboard-card` 구조를 복사하여 사용
