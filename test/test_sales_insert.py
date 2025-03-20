@@ -89,8 +89,8 @@ def insert_data(connection, df, chunk_size=100):
 
 # 메인 실행
 def main():
-    numbers_file = "Warehouse_and_Retail_Sales.xlsx"
-    df = pd.read_excel(numbers_file)
+    file = "Warehouse_and_Retail_Sales.csv"
+    df = pd.read_csv(file)
 
     object_columns = df.select_dtypes(include=["object"]).columns
     df[object_columns] = df[object_columns].astype(str)
