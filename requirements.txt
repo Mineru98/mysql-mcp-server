@@ -4,3 +4,4 @@ pandas==2.2.3
 python-dotenv==1.0.1
 fire==0.7.0
 cryptography==44.0.2
+tqdm==4.67.1

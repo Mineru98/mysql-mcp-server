@@ -54,11 +54,18 @@ def create_table(connection):
 
 def preprocess_record(record):
     """NaN 및 NumPy 타입을 SQL 친화적으로 변환"""
-    return tuple(None if pd.isna(x) else x.item() if isinstance(x, (np.integer, np.floating)) else x for x in record)
+    return tuple(
+        (
+            None
+            if pd.isna(x)
+            else x.item() if isinstance(x, (np.integer, np.floating)) else x
+        )
+        for x in record
+    )
 
 
 # 데이터 삽입 함수
-def insert_data(connection, df, chunk_size=100):
+def insert_data(connection, df, chunk_size=1000):
     try:
         # DataFrame을 레코드 리스트로 변환
         records = df.to_records(index=False)
@@ -75,7 +82,10 @@ def insert_data(connection, df, chunk_size=100):
 
             with tqdm(total=total_rows, desc="Inserting data") as pbar:
                 for i in range(0, total_rows, chunk_size):
-                    chunk = [preprocess_record(records[j]) for j in range(i, min(i + chunk_size, total_rows))]
+                    chunk = [
+                        preprocess_record(records[j])
+                        for j in range(i, min(i + chunk_size, total_rows))
+                    ]
                     cursor.executemany(insert_query, chunk)
                     pbar.update(len(chunk))
             connection.commit()
