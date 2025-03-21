@@ -7,6 +7,8 @@ services:
       - .env.example
     environment:
       - MYSQL_HOST=db
+    depends_on:
+      - db
   db:
     image: mysql:8.0.35
     restart: always
