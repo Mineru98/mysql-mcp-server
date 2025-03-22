@@ -518,17 +518,36 @@ def excute_invoke_viz_pro(
             "apexcharts_js_guidelines": {
                 "theme_colors": theme_colors,
                 "common_options": {
-                    "chart": {"height": 300, "fontFamily": "Pretendard", "toolbar": {"show": False}},
+                    "chart": {
+                        "height": 300,
+                        "fontFamily": "Pretendard",
+                        "toolbar": {"show": False},
+                    },
                     "colors": theme_colors,
                     "stroke": {"curve": "smooth", "width": 2},
-                    "grid": {"borderColor": "#f1f1f1", "row": {"colors": ["transparent", "transparent"]}},
-                    "markers": {"size": 4, "colors": theme_colors, "strokeColors": "#fff", "strokeWidth": 2},
+                    "grid": {
+                        "borderColor": "#f1f1f1",
+                        "row": {"colors": ["transparent", "transparent"]},
+                    },
+                    "markers": {
+                        "size": 4,
+                        "colors": theme_colors,
+                        "strokeColors": "#fff",
+                        "strokeWidth": 2,
+                    },
                     "tooltip": {"theme": "light", "marker": {"show": True}},
                 },
-                "chart_guidelines": [get_chart_guidelines(chart_type) for chart_type in choice_chart_types],
+                "chart_guidelines": [
+                    get_chart_guidelines(chart_type)
+                    for chart_type in choice_chart_types
+                ],
                 "end_script": "["
                 + ",".join(
-                    c_type for c_type, _ in [get_chart_guidelines(chart_type) for chart_type in choice_chart_types]
+                    c_type
+                    for c_type, _ in [
+                        get_chart_guidelines(chart_type)
+                        for chart_type in choice_chart_types
+                    ]
                 )
                 + "].forEach(chart => chart.render());",
             },

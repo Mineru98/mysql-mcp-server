@@ -27,7 +27,10 @@ def execute_insert_query(query: str) -> List[TextContent]:
                 conn.commit()
                 response_data = {"success": True, "affected_rows": cursor.rowcount}
             else:
-                response_data = {"success": False, "error": "Only INSERT INTO queries are supported"}
+                response_data = {
+                    "success": False,
+                    "error": "Only INSERT INTO queries are supported",
+                }
     except Exception as e:
         response_data = {"success": False, "error": str(e)}
 
