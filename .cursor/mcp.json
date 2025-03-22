@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "mysql-mcp": {
-      "url": "http://localhost:8787/sse"
+      "url": "http://localhost:8081/sse"
     }
   }
 }
