@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2020년 영업 판매 실적 보고서</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://unpkg.com/feather-icons@4.29.1"></script>
+    <script src="https://unpkg.com/apexcharts@4.5.0"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        :root {
+            --primary-color: #F7087D; /* 블랙핑크 핑크 */
+            --primary-light: #FF70BD; /* 연한 핑크 */
+            --primary-dark: #CC066B; /* 진한 핑크 */
+            --accent-color: #FFECF5; /* 매우 연한 핑크 */
+            --black-color: #000000; /* 블랙핑크 블랙 */
+            --text-primary: #333;
+            --text-secondary: #666;
+        }
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F8F7FC;
+            color: var(--text-primary);
+        }
+        .dashboard-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+        }
+        .analysis-section {
+            border-left: 4px solid var(--primary-color);
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .header-section {
+            background: linear-gradient(to right, var(--primary-light), var(--primary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        .header-title {
+            font-weight: 700;
+        }
+        .header-subtitle {
+            opacity: 0.9;
+        }
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        .chart-container {
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-6">
+        <div class="header-section">
+            <h1 class="header-title text-3xl">2020년 영업 판매 실적 분석</h1>
+            <p class="header-subtitle text-lg">연간 주요 영업 실적 및 분석 결과</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="stat-card">
+                    <div class="stat-value">174.54만원</div>
+                    <div class="stat-label">총 소매 판매액</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">138.50만원</div>
+                    <div class="stat-label">창고 판매액</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">174.54만원</div>
+                    <div class="stat-label">전체 판매액</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">기록 월 수</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">월별 매출 추이 (2020년)</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="monthlyChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">2020년 7월에 가장 높은 매출을 기록했으며, 1월에 가장 낮은 매출을 기록했습니다. 3월과 9월은 중간 수준의 매출을 보여주고 있습니다. 판매 추세는 상반기에 지속적으로 상승하는 경향을 보이다가 9월에 소폭 하락했습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">매출 채널 비교 (소매 vs 창고)</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="channelComparisonChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">2020년 전체적으로 창고 판매가 소매 판매보다 높은 비중을 차지했습니다. 창고 판매는 매월 소매 판매의 3-4배 수준을 유지하고 있으며, 특히 7월에 가장 큰 창고 판매 실적을 보였습니다. 이는 하계 시즌 대규모 주문에 기인한 것으로 분석됩니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">상품 유형별 판매 비중</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="itemTypeChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">2020년 판매에서 맥주(BEER) 카테고리가 전체 매출의 약 80%를 차지하며 가장 높은 비중을 보였습니다. 와인(WINE)과 주류(LIQUOR)가 그 뒤를 이었으며, 비알콜 제품과 기타 카테고리는 상대적으로 낮은 매출 기여도를 보였습니다. 맥주 카테고리의 높은 매출은 창고 판매의 영향이 큰 것으로 분석됩니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">소매 vs 창고 채널 판매 분석</h2>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <div id="channelDetailChart" class="chart-container"></div>
+                    </div>
+                    <div class="analysis-section">
+                        <h3 class="font-medium text-[var(--primary-dark)] mb-2">분석 결과</h3>
+                        <p class="text-sm">맥주 카테고리는 창고 판매가 압도적으로 높았으며, 주류 카테고리는 반대로 소매 판매가 높게 나타났습니다. 와인은 창고와 소매 판매가 비교적 균형있게 분포되어 있으며, 비알콜 제품은 소매 판매 비중이 높게 나타났습니다. 이는 제품 유형별로 판매 채널 전략을 달리해야 함을 시사합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-card mb-8">
+            <div class="card-header">
+                <h2 class="card-title">2020년 종합 판매 분석 인사이트</h2>
+            </div>
+            <div class="p-6">
+                <div class="prose max-w-none">
+                    <h3 class="text-xl font-medium text-[var(--primary-dark)] mb-3">핵심 인사이트</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="border-l-4 border-[var(--primary-color)] pl-4 py-2">
+                            <h4 class="font-medium mb-2">계절성 판매 패턴</h4>
+                            <p class="text-sm text-gray-700">여름 시즌(7월)에 가장 높은 판매량을 기록했으며, 겨울(1월)에 가장 낮은 판매량을 보였습니다. 이는 계절에 따른 소비 패턴을 고려한 재고 관리와 마케팅 전략이 필요함을 시사합니다.</p>
+                        </div>
+                        <div class="border-l-4 border-[var(--black-color)] pl-4 py-2">
+                            <h4 class="font-medium mb-2">채널별 판매 전략</h4>
+                            <p class="text-sm text-gray-700">창고 판매는 맥주 카테고리에서 강세를 보인 반면, 주류와 비알콜 제품은 소매 채널에서 더 좋은 성과를 거두었습니다. 제품 유형별로 판매 채널 접근법을 최적화할 필요가 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="border-l-4 border-[var(--primary-light)] pl-4 py-2">
+                            <h4 class="font-medium mb-2">상품 포트폴리오 분석</h4>
+                            <p class="text-sm text-gray-700">맥주 카테고리가 총 매출의 약 80%를 차지하여 매출 집중도가 높습니다. 와인과 주류 카테고리를 강화하여 포트폴리오 다각화가 필요합니다.</p>
+                        </div>
+                        <div class="border-l-4 border-[var(--primary-dark)] pl-4 py-2">
+                            <h4 class="font-medium mb-2">성장 기회 영역</h4>
+                            <p class="text-sm text-gray-700">비알콜 제품 카테고리는 현재 매출 기여도는 낮지만, 소매 채널에서 상대적으로 좋은 성과를 보이고 있어 향후 성장 잠재력이 있습니다. 건강 트렌드에 맞춘 제품 라인업 확대를 고려해볼 수 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-medium text-[var(--primary-dark)] mb-3">권장 조치사항</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-700 mb-6">
+                        <li>계절성을 고려한 재고 관리 시스템 도입 - 여름철 맥주 수요 증가에 대비한 선제적 재고 확보</li>
+                        <li>주류 카테고리의 창고 판매 증대를 위한 B2B 영업 전략 강화</li>
+                        <li>와인 카테고리 소매 마진 개선을 위한 프리미엄 제품 라인업 확대</li>
+                        <li>비알콜 제품 라인 확대 및 마케팅 강화로 건강 음료 시장 공략</li>
+                        <li>데이터 수집 빈도 개선 - 현재 분기별 데이터를 월별 데이터로 세분화하여 더 정확한 추세 분석 필요</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 테마 색상 설정
+            const themeColors = ['#F7087D', '#000000', '#FF70BD', '#F5F5F5'];
+            
+            // 공통 차트 옵션
+            const commonOptions = {
+                chart: {
+                    height: 300,
+                    fontFamily: 'Pretendard',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                colors: themeColors,
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                grid: {
+                    borderColor: '#f1f1f1',
+                    row: {
+                        colors: ['transparent', 'transparent']
+                    }
+                },
+                markers: {
+                    size: 4,
+                    colors: themeColors,
+                    strokeColors: '#fff',
+                    strokeWidth: 2
+                },
+                tooltip: {
+                    theme: 'light',
+                    marker: {
+                        show: true
+                    }
+                }
+            };
+            
+            // 월별 매출 추이 차트
+            var monthlyChart = new ApexCharts(document.querySelector("#monthlyChart"), {
+                ...commonOptions,
+                chart: { 
+                    ...commonOptions.chart,
+                    type: 'line' 
+                },
+                series: [{ 
+                    name: '총 매출 (만원)', 
+                    data: [35.84, 42.69, 51.26, 44.75]
+                }],
+                xaxis: { 
+                    categories: ['1월', '3월', '7월', '9월']
+                }
+            });
+            monthlyChart.render();
+            
+            // 매출 채널 비교 차트
+            var channelComparisonChart = new ApexCharts(document.querySelector("#channelComparisonChart"), {
+                ...commonOptions,
+                chart: { 
+                    ...commonOptions.chart,
+                    type: 'bar'
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        borderRadius: 4
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                series: [
+                    { name: '소매 판매', data: [7.43, 10.94, 9.45, 8.21] },
+                    { name: '창고 판매', data: [28.41, 31.75, 41.81, 36.53] }
+                ],
+                xaxis: { 
+                    categories: ['1월', '3월', '7월', '9월']
+                }
+            });
+            channelComparisonChart.render();
+            
+            // 상품 유형별 판매 비중 차트
+            var itemTypeChart = new ApexCharts(document.querySelector("#itemTypeChart"), {
+                ...commonOptions,
+                chart: { 
+                    ...commonOptions.chart,
+                    type: 'pie'
+                },
+                series: [1270.02, 311.03, 150.57, 15.04],
+                labels: ['맥주', '와인', '주류', '비알콜'],
+                legend: {
+                    position: 'bottom'
+                },
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 300
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }]
+            });
+            itemTypeChart.render();
+            
+            // 채널별 상품 유형 판매 분석 차트
+            var channelDetailChart = new ApexCharts(document.querySelector("#channelDetailChart"), {
+                ...commonOptions,
+                chart: { 
+                    ...commonOptions.chart,
+                    type: 'bar'
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                        borderRadius: 4,
+                        dataLabels: {
+                            position: 'top'
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 1,
+                    colors: ['#fff']
+                },
+                series: [
+                    { name: '소매 판매', data: [99.84, 111.80, 137.53, 10.76] },
+                    { name: '창고 판매', data: [1170.17, 199.23, 13.05, 4.28] }
+                ],
+                xaxis: { 
+                    categories: ['맥주', '와인', '주류', '비알콜']
+                }
+            });
+            channelDetailChart.render();
+            
+            // Feather 아이콘 초기화
+            feather.replace();
+        });
+    </script>
+</body>
+</html> 
