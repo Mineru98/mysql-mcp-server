@@ -177,3 +177,4 @@ test*.py
 !test/test*.py
 *.xlsx
 *.csv
+.DS_Store
